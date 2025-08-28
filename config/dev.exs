@@ -82,18 +82,18 @@ config :phoenixmart, Phoenixmart.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :phoenixmart_web, PhoenixmartWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
-  check_origin: false,
-  code_reloader: true,
-  debug_errors: true,
-  secret_key_base: "ROz0po0b9lVS49+8LidNdfnjiSmJvNFQOAu8dgyXIfQsOum8PkYNufuAvQqWDSXs",
-  watchers: [
-    esbuild: {Esbuild, :install_and_run, [:phoenixmart_web, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:phoenixmart_web, ~w(--watch)]}
-  ]
+#config :phoenixmart_web, PhoenixmartWeb.Endpoint,
+#  # Binding to loopback ipv4 address prevents access from other machines.
+#  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+#  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
+#  check_origin: false,
+#  code_reloader: true,
+#  debug_errors: true,
+#  secret_key_base: "ROz0po0b9lVS49+8LidNdfnjiSmJvNFQOAu8dgyXIfQsOum8PkYNufuAvQqWDSXs",
+#  watchers: [
+#    esbuild: {Esbuild, :install_and_run, [:phoenixmart_web, ~w(--sourcemap=inline --watch)]},
+#    tailwind: {Tailwind, :install_and_run, [:phoenixmart_web, ~w(--watch)]}
+#  ]
 
 # ## SSL Support
 #
@@ -119,15 +119,15 @@ config :phoenixmart_web, PhoenixmartWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :phoenixmart_web, PhoenixmartWeb.Endpoint,
-  live_reload: [
-    web_console_logger: true,
-    patterns: [
-      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/phoenixmart_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
-    ]
-  ]
+#config :phoenixmart_web, PhoenixmartWeb.Endpoint,
+#  live_reload: [
+#    web_console_logger: true,
+#    patterns: [
+#      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
+#      ~r"priv/gettext/.*(po)$",
+#      ~r"lib/phoenixmart_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
+#    ]
+#  ]
 
 # Enable dev routes for dashboard and mailbox
 config :phoenixmart_web, dev_routes: true

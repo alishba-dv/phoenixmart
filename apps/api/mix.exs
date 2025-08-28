@@ -58,7 +58,10 @@ defmodule Api.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:phoenix_swagger, "~> 0.8.3"}, # swagger generator + macros
+      {:ex_json_schema, "~> 0.7.1"},   # json schema support (used by phoenix_swagger)
+      {:poison, "~> 2.2"}
     ]
   end
 

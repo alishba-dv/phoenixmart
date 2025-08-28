@@ -1,6 +1,6 @@
 defmodule Api.Router do
   use Api, :router
-
+  use PhoenixSwagger
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -24,6 +24,13 @@ defmodule Api.Router do
   # scope "/api", Api do
   #   pipe_through :api
   # end
+
+  scope "/swagger" do
+    # This serves the Swagger UI at /swagger
+    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+            otp_app: :api,
+            swagger_file: "swagger.json"
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:api, :dev_routes) do

@@ -9,8 +9,8 @@
 # move said applications out of the umbrella.
 import Config
 
-config :api,
-  ecto_repos: [Api.Repo],
+config :data,
+  ecto_repos: [Data.Repo],
   generators: [context_app: false]
 
 # Configures the endpoint
@@ -71,20 +71,20 @@ config :phoenixmart,
 # at the `config/runtime.exs`.
 config :phoenixmart, Phoenixmart.Mailer, adapter: Swoosh.Adapters.Local
 
-config :phoenixmart_web,
-  ecto_repos: [Phoenixmart.Repo],
-  generators: [context_app: :phoenixmart]
+#config :phoenixmart_web,
+#  ecto_repos: [Phoenixmart.Repo],
+#  generators: [context_app: :phoenixmart]
 
 # Configures the endpoint
-config :phoenixmart_web, PhoenixmartWeb.Endpoint,
-  url: [host: "localhost"],
-  adapter: Bandit.PhoenixAdapter,
-  render_errors: [
-    formats: [html: PhoenixmartWeb.ErrorHTML, json: PhoenixmartWeb.ErrorJSON],
-    layout: false
-  ],
-  pubsub_server: Phoenixmart.PubSub,
-  live_view: [signing_salt: "MgHKYb0o"]
+#config :phoenixmart_web, PhoenixmartWeb.Endpoint,
+#  url: [host: "localhost"],
+#  adapter: Bandit.PhoenixAdapter,
+#  render_errors: [
+#    formats: [html: PhoenixmartWeb.ErrorHTML, json: PhoenixmartWeb.ErrorJSON],
+#    layout: false
+#  ],
+#  pubsub_server: Phoenixmart.PubSub,
+#  live_view: [signing_salt: "MgHKYb0o"]
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -114,6 +114,14 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :api, :phoenix_swagger,
+       swagger_files: %{
+         "priv/static/swagger.json" => [
+           router: Api.Router,
+           endpoint: Api.Endpoint
+         ]
+       }
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
