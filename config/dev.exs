@@ -57,17 +57,17 @@ config :api, Api.Endpoint,
 config :api, dev_routes: true
 
 # Configure your database
-config :data, Data.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "data_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+#config :data, Data.Repo,
+#  username: "postgres",
+#  password: "postgres",
+#  hostname: "localhost",
+#  database: "pheonixmart_dev",
+#  stacktrace: true,
+#  show_sensitive_data_on_connection_error: true,
+#  pool_size: 10
 
 # Configure your database
-config :phoenixmart, Phoenixmart.Repo,
+config :data, Data.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
@@ -130,7 +130,7 @@ config :phoenixmart, Phoenixmart.Repo,
 #  ]
 
 # Enable dev routes for dashboard and mailbox
-config :phoenixmart_web, dev_routes: true
+#config :phoenixmart_web, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

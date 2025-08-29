@@ -11,7 +11,7 @@ import Config
 
 config :data,
   ecto_repos: [Data.Repo],
-  generators: [context_app: false]
+  generators: [data: false]
 
 # Configures the endpoint
 config :api, Api.Endpoint,
@@ -59,8 +59,8 @@ config :data,
 config :data, Data.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure Mix tasks and generators
-config :phoenixmart,
-  ecto_repos: [Phoenixmart.Repo]
+#config :phoenixmart,
+#  ecto_repos: [Data.Repo]
 
 # Configures the mailer
 #
@@ -69,7 +69,8 @@ config :phoenixmart,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :phoenixmart, Phoenixmart.Mailer, adapter: Swoosh.Adapters.Local
+#config :phoenixmart, Phoenixmart.Mailer, adapter: Swoosh.Adapters.Local
+
 
 #config :phoenixmart_web,
 #  ecto_repos: [Phoenixmart.Repo],
@@ -87,25 +88,25 @@ config :phoenixmart, Phoenixmart.Mailer, adapter: Swoosh.Adapters.Local
 #  live_view: [signing_salt: "MgHKYb0o"]
 
 # Configure esbuild (the version is required)
-config :esbuild,
-  version: "0.25.4",
-  phoenixmart_web: [
-    args:
-      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
-    cd: Path.expand("../apps/phoenixmart_web/assets", __DIR__),
-    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
-  ]
+#config :esbuild,
+#  version: "0.25.4",
+#  phoenixmart_web: [
+#    args:
+#      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
+#    cd: Path.expand("../apps/phoenixmart_web/assets", __DIR__),
+#    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
+#  ]
 
 # Configure tailwind (the version is required)
-config :tailwind,
-  version: "4.1.7",
-  phoenixmart_web: [
-    args: ~w(
-      --input=assets/css/app.css
-      --output=priv/static/assets/css/app.css
-    ),
-    cd: Path.expand("../apps/phoenixmart_web", __DIR__)
-  ]
+#config :tailwind,
+#  version: "4.1.7",
+#  phoenixmart_web: [
+#    args: ~w(
+#      --input=assets/css/app.css
+#      --output=priv/static/assets/css/app.css
+#    ),
+#    cd: Path.expand("../apps/phoenixmart_web", __DIR__)
+#  ]
 
 # Configures Elixir's Logger
 config :logger, :default_formatter,

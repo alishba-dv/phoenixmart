@@ -42,7 +42,11 @@ defmodule Data.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.16"},
-      {:req, "~> 0.5"}
+      {:req, "~> 0.5"},
+      {:phoenix, "~> 1.7.0"},
+      {:phoenix_ecto, "~> 4.4"},
+#      {:ecto_sql, "~> 3.10"},
+#      {:postgrex, ">= 0.0.0"},
     ]
   end
 
