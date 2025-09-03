@@ -9,6 +9,10 @@
 # move said applications out of the umbrella.
 import Config
 
+config :api, Api.Guardian,
+    issuer: "api",
+    secret_key: "jZDltu7RvedwTUlNym1L10db7aR2rAOofKRsgCrjZuytsysqnlAUYdJAwBi8vTgF"
+
 config :data,
   ecto_repos: [Data.Repo],
   generators: [data: false]

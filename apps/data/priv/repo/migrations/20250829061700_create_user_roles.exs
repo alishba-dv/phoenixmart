@@ -7,7 +7,7 @@ defmodule Data.Repo.Migrations.UserRoles do
        add :user_id, references(:users,on_delete: :delete_all)
        add :role_id, references(:roles, on_delete: :delete_all)
 
-      timestamps()
+#      timestamps()
     end
 
     create unique_index(:user_roles, [:user_id,:role_id])

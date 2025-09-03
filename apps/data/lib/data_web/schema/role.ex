@@ -1,4 +1,4 @@
-defmodule Data.Role do
+defmodule Data.Schema.Role do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule Data.Role do
 
     field :name, :string
 
-    many_to_many :users, Data.User, join_through: "user_roles", on_replace: :delete
+    many_to_many :users, Data.Schema.User, join_through: "user_roles"
 
     timestamps()
   end

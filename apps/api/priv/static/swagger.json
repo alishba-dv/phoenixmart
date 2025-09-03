@@ -1,10 +1,85 @@
 {
   "swagger": "2.0",
-  "paths": {},
+  "paths": {
+    "/api/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a user",
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/users"
+            },
+            "description": "Success"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/users"
+            },
+            "required": true,
+            "name": "user",
+            "in": "body",
+            "description": "User logged in  successfully"
+          }
+        ],
+        "operationId": "Api.UserController.createuser",
+        "description": "A new user will be created",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  },
   "info": {
     "version": "0.0.1",
     "title": "<enter your title>"
   },
   "host": "localhost:4000",
-  "definitions": {}
+  "definitions": {
+    "users": {
+      "type": "object",
+      "title": "user",
+      "required": [
+        "role",
+        "password",
+        "email",
+        "name"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "role"
+        },
+        "password": {
+          "type": "string",
+          "description": "password"
+        },
+        "name": {
+          "type": "string",
+          "description": "name"
+        },
+        "email": {
+          "type": "string",
+          "description": "email"
+        }
+      },
+      "example": {
+        "role": "1",
+        "password": "12345#",
+        "name": "tester",
+        "email": "tester@gmail.com"
+      },
+      "description": "A user record"
+    }
+  }
 }

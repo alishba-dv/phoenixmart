@@ -1,4 +1,4 @@
-defmodule Data.User do
+defmodule Data.Schema.User do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -8,8 +8,8 @@ defmodule Data.User do
     field :password, :string
 
     has_many :orders, Data.Order   ###a user can have many orders  and order must belong to a user
-#
-    many_to_many :roles, Data.Role,join_through: "user_roles" ,on_replace: :delete   ###a user can have many roles and a role can belong to many users and as user roles table dont have user id stored so we will hae a join through table with cascade delete
+
+    many_to_many :roles, Data.Schema.Role,join_through: "user_roles" ,on_replace: :delete   ###a user can have many roles and a role can belong to many users and as user roles table dont have user id stored so we will hae a join through table with cascade delete
 
 
     timestamps()

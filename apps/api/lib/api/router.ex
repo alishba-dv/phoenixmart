@@ -21,16 +21,25 @@ defmodule Api.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Api do
-  #   pipe_through :api
-  # end
+#   scope "/api", Api do
+#     pipe_through :api
+#
+#  end
 
-  scope "/swagger" do
-    # This serves the Swagger UI at /swagger
-    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+  scope "/" do
+    # Swagger UI will be at /swagger
+    forward "/swagger", PhoenixSwagger.Plug.SwaggerUI,
             otp_app: :api,
             swagger_file: "swagger.json"
   end
+
+  scope "/api" do
+    pipe_through :api
+
+    post "/user", Api.UserController, :createuser
+  end
+
+
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:api, :dev_routes) do
