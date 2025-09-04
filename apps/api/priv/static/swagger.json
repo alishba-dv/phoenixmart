@@ -1,5 +1,17 @@
 {
   "swagger": "2.0",
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT auth using Bearer scheme. Example: 'Bearer <token>'"
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
   "paths": {
     "/api/user": {
       "post": {
@@ -7,6 +19,11 @@
           "User"
         ],
         "summary": "Create a user",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "404": {
             "description": "Bad request"
@@ -38,11 +55,49 @@
           "application/json"
         ]
       }
+    },
+    "/api/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs in a user",
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/login"
+            },
+            "description": "Success"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/login"
+            },
+            "required": true,
+            "name": "user",
+            "in": "body",
+            "description": "User logged in  successfully"
+          }
+        ],
+        "operationId": "Api.UserController.login",
+        "description": "A user will be logged in",
+        "consumes": [
+          "application/json"
+        ]
+      }
     }
   },
   "info": {
-    "version": "0.0.1",
-    "title": "<enter your title>"
+    "version": "1.0",
+    "title": "PhoenixMart  Rest API"
   },
   "host": "localhost:4000",
   "definitions": {
@@ -80,6 +135,30 @@
         "email": "tester@gmail.com"
       },
       "description": "A user record"
+    },
+    "login": {
+      "type": "object",
+      "title": "user",
+      "required": [
+        "password",
+        "email"
+      ],
+      "properties": {
+        "password": {
+          "type": "string",
+          "description": "password"
+        },
+        "email": {
+          "type": "string",
+          "description": "email"
+        }
+      },
+      "example": {
+        "password": "12345#",
+        "email": "tester@gmail.com"
+      },
+      "description": "log in a user"
     }
-  }
+  },
+  "basePath": "/"
 }

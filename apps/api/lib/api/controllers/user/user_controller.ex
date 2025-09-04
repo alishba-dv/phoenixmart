@@ -2,28 +2,53 @@ defmodule Api.UserController do
 
   alias Data.Schema.User
   use PhoenixSwagger
+  alias Data.Context.Login
   alias Data.Context.CreateUser
   alias Api.Auth.Guardian
   use Api, :controller
 #  ---------------------Swagger paths----------------------------
 
 
-swagger_path :createuser do
-  post("/api/user")
+  swagger_path :createuser do
+    security [%{Bearer: []}]
 
-  summary("Create a user")
-  description("A new user will be created")
-  produces "application/json"
-  consumes "application/json"
 
-  parameters do
-    user :body, Schema.ref(:users), "User logged in  successfully",required: true
+    post("/api/user")
+
+    summary("Create a user")
+    description("A new user will be created")
+    produces "application/json"
+    consumes "application/json"
+
+    parameters do
+      user :body, Schema.ref(:users), "User logged in  successfully",required: true
+
+    end
+
+
+    response 200, "Success",Schema.ref(:users)
+    response 404, "Bad request"
+
 
   end
 
 
-  response 200, "Success",Schema.ref(:users)
-  response 404, "Bad request"
+  swagger_path :login do
+    post("/api/login")
+
+    summary("Logs in a user")
+    description("A user will be logged in")
+    produces "application/json"
+    consumes "application/json"
+
+    parameters do
+      user :body, Schema.ref(:login), "User logged in  successfully",required: true
+
+    end
+
+
+    response 200, "Success",Schema.ref(:login)
+    response 404, "Bad request"
 
 
   end
@@ -53,7 +78,23 @@ def swagger_definitions do
       password: "12345#",
       role: "1"
     }
-  end
+  end,
+    login: swagger_schema do
+
+      title "user"
+      description "log in a user"
+      properties do
+        email :string, "email", required: true
+        password :string, "password", required: true
+      end
+
+      example %{
+
+        email: "tester@gmail.com",
+        password: "12345#",
+
+      }
+    end
   }
 end
 
@@ -87,6 +128,23 @@ end
 
     end
 
+
+
+  def login(conn, %{"email" => email, "password" => password}) do
+    case Login.login(%{"email" => email, "password" => password}) do
+      {:ok, user} ->
+        {:ok, token, _claims} = Api.Auth.Guardian.encode_and_sign(user)
+        json(conn, %{Access_token: token, id: user.id, name: user.name, email: user.email,   roles: Enum.map(user.roles, fn role -> %{id: role.id, name: role.name} end)
+        })
+
+      {:error, message} ->
+        json(conn, %{message: message})
     end
+  end
 
 
+
+
+
+
+end

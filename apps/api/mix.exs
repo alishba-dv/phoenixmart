@@ -62,7 +62,9 @@ defmodule Api.MixProject do
       {:phoenix_swagger, "~> 0.8.3"}, # swagger generator + macros
       {:ex_json_schema, "~> 0.7.1"},   # json schema support (used by phoenix_swagger)
       {:poison, "~> 2.2"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:bcrypt_elixir, "~> 3.0"}
+
     ]
   end
 

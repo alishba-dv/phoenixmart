@@ -9,16 +9,35 @@ defmodule Api.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
-
+  def swagger_info do
+    %{
+      info: %{title: "PhoenixMart  Rest API", version: "1.0"},
+      basePath: "/",
+      schemes: ["http","https"],
+      securityDefinitions: %{
+        Bearer: %{
+          type: "apiKey",
+          name: "Authorization",
+          in: "header",
+          description: "JWT auth using Bearer scheme. Example: 'Bearer <token>'"
+        }
+      }
+    }
+  end
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", Api do
-    pipe_through :browser
 
-    get "/", PageController, :home
+  pipeline :auth do
+    plug Api.Auth.Pipeline
   end
+
+#  scope "/", Api do
+#    pipe_through :browser
+#
+#    get "/", PageController, :home
+#  end
 
   # Other scopes may use custom stacks.
 #   scope "/api", Api do
@@ -34,9 +53,18 @@ defmodule Api.Router do
   end
 
   scope "/api" do
-    pipe_through :api
+    pipe_through [:api]
+
+#    post "/user", Api.UserController, :createuser
+    post "/login",Api.UserController, :login
+  end
+
+
+  scope "/api" do
+    pipe_through [:api,:auth]
 
     post "/user", Api.UserController, :createuser
+    post "/login",Api.UserController, :login
   end
 
 
