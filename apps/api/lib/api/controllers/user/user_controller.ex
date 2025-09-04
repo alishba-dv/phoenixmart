@@ -64,6 +64,15 @@ defmodule Api.UserController do
     produces "application/json"
 
 
+    parameters do
+      name(:query,:string,"Name to filter",required: false)
+      email(:query,:string,"Email to filter",required: false)
+      role(:query,:string,"Role to filter",required: false,enum: ["1","2","3"])
+      sort(:query,:string,"Sort the results",required: false,enum: ["Ascending","Descending"])
+      page(:query,:string,"Page number to show",required: false)
+      page_size(:query,:string,"Total Entries in a page",required: false)
+      end
+
 
 
     response 200, "Success",Schema.ref(:viewusers)

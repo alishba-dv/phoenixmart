@@ -38,7 +38,59 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "type": "string",
+            "required": false,
+            "name": "name",
+            "in": "query",
+            "description": "Name to filter"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "name": "email",
+            "in": "query",
+            "description": "Email to filter"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "name": "role",
+            "in": "query",
+            "enum": [
+              "1",
+              "2",
+              "3"
+            ],
+            "description": "Role to filter"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "name": "sort",
+            "in": "query",
+            "enum": [
+              "Ascending",
+              "Descending"
+            ],
+            "description": "Sort the results"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "name": "page",
+            "in": "query",
+            "description": "Page number to show"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "name": "page_size",
+            "in": "query",
+            "description": "Total Entries in a page"
+          }
+        ],
         "operationId": "Api.UserController.viewusers",
         "description": "View all users"
       }
