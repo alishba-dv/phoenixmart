@@ -5,6 +5,9 @@ defmodule Api.UserController do
   alias Data.Context.Login
   alias Data.Context.CreateUser
   alias Api.Auth.Guardian
+  Data.Context.ViewUsers
+
+
   use Api, :controller
 #  ---------------------Swagger paths----------------------------
 
@@ -53,11 +56,27 @@ defmodule Api.UserController do
 
   end
 
+  swagger_path :viewusers do
+    get("/api/users")
+    security [%{Bearer: []}]
+    summary("View all users")
+    description("View all users")
+    produces "application/json"
 
 
 
 
-#----------------------------Swagger Schemas-------------------------------
+    response 200, "Success",Schema.ref(:viewusers)
+    response 404, "Bad request"
+
+
+  end
+
+
+
+
+
+  #----------------------------Swagger Schemas-------------------------------
 
 def swagger_definitions do
   %{
@@ -94,6 +113,25 @@ def swagger_definitions do
         password: "12345#",
 
       }
+    end,
+    viewusers: swagger_schema do
+
+      title "user"
+      description "View a  user"
+      properties do
+        email :string, "email", required: true
+        password :string, "password", required: true
+        role_id :string, "Role ID", required: true
+        role_name :string, "Role Name", required: true
+      end
+      example %{
+      email: "tester@gmail.com",
+      name: "tester",
+      role_id: "1",
+      role_name: "Admin"
+               }
+
+
     end
   }
 end
@@ -143,8 +181,38 @@ end
   end
 
 
+  def viewusers(conn, _params) do
+    case Data.Context.ViewUsers.viewusers() do
+
+      {:ok,users}->
+    user_maps =
+      Enum.map(users, fn user ->
+        %{
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          roles:
+            Enum.map(
+              user.roles, fn role ->
+            %{id: role.id,
+              name: role.name
+            }
+          end)
+        }
+      end)
+
+    json(conn, %{
+      message: "Users fetched successfully",
+      users: user_maps
+    })
 
 
+    {:error,message} -> json(conn,%{message: message})
+  end
 
+  end
 
 end
+
+
+

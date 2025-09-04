@@ -13,6 +13,36 @@
     "https"
   ],
   "paths": {
+    "/api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "View all users",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/viewusers"
+            },
+            "description": "Success"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "operationId": "Api.UserController.viewusers",
+        "description": "View all users"
+      }
+    },
     "/api/user": {
       "post": {
         "tags": [
@@ -101,6 +131,41 @@
   },
   "host": "localhost:4000",
   "definitions": {
+    "viewusers": {
+      "type": "object",
+      "title": "user",
+      "required": [
+        "role_name",
+        "role_id",
+        "password",
+        "email"
+      ],
+      "properties": {
+        "role_name": {
+          "type": "string",
+          "description": "Role Name"
+        },
+        "role_id": {
+          "type": "string",
+          "description": "Role ID"
+        },
+        "password": {
+          "type": "string",
+          "description": "password"
+        },
+        "email": {
+          "type": "string",
+          "description": "email"
+        }
+      },
+      "example": {
+        "role_name": "Admin",
+        "role_id": "1",
+        "name": "tester",
+        "email": "tester@gmail.com"
+      },
+      "description": "View a  user"
+    },
     "users": {
       "type": "object",
       "title": "user",
