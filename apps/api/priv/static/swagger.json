@@ -278,6 +278,49 @@
           "application/json"
         ]
       }
+    },
+    "/api/category": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Add a new category in database",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/createcategory"
+            },
+            "description": "Category created successfully"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/createcategory"
+            },
+            "required": true,
+            "name": "category",
+            "in": "body",
+            "description": "Category created successfully"
+          }
+        ],
+        "operationId": "Api.CategoryController.createcategory",
+        "description": "Add a new category",
+        "consumes": [
+          "application/json"
+        ]
+      }
     }
   },
   "info": {
@@ -412,6 +455,23 @@
         "category_id": "1"
       },
       "description": "Create a new product in database"
+    },
+    "createcategory": {
+      "type": "object",
+      "title": "Create Category",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Category Name"
+        }
+      },
+      "example": {
+        "name": "category#1"
+      },
+      "description": "Create a new category"
     }
   },
   "basePath": "/"

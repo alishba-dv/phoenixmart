@@ -69,6 +69,7 @@ defmodule Api.Router do
     get "/roles", Api.UserController, :viewroles
     get "/profile",Api.UserController, :profile
     post "/product",Api.ProductController, :createproduct
+    post "/category",Api.CategoryController,:createcategory
   end
 
 
