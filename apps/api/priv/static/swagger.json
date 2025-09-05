@@ -138,6 +138,109 @@
         ]
       }
     },
+    "/api/roles": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "View all Roles",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/viewroles"
+            },
+            "description": "Success"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "operationId": "Api.UserController.viewroles",
+        "description": "View all Roles"
+      }
+    },
+    "/api/profile": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "View profile\n",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Bad request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/profile"
+            },
+            "description": "Success"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "operationId": "Api.UserController.profile",
+        "description": "A user can view profile"
+      }
+    },
+    "/api/product": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create product",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/createproduct"
+            },
+            "description": "Product Created successfully"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/createproduct"
+            },
+            "required": true,
+            "name": "product",
+            "in": "body",
+            "description": "Product Created successfully"
+          }
+        ],
+        "operationId": "Api.ProductController.createproduct",
+        "description": "To create a product in database",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
     "/api/login": {
       "post": {
         "tags": [
@@ -218,6 +321,15 @@
       },
       "description": "View a  user"
     },
+    "viewroles": {
+      "type": "object",
+      "title": "Roles",
+      "example": {
+        "name": "Admin",
+        "id": "1"
+      },
+      "description": "View all roles"
+    },
     "users": {
       "type": "object",
       "title": "user",
@@ -253,6 +365,19 @@
       },
       "description": "A user record"
     },
+    "profile": {
+      "type": "object",
+      "title": "Profile",
+      "example": {
+        "roles": {
+          "role_name": "Manager",
+          "role_id": "3"
+        },
+        "name": "tester",
+        "email": "tester@gmail.com"
+      },
+      "description": "View a  user profile"
+    },
     "login": {
       "type": "object",
       "title": "user",
@@ -275,6 +400,18 @@
         "email": "tester@gmail.com"
       },
       "description": "log in a user"
+    },
+    "createproduct": {
+      "type": "object",
+      "title": "Create a new product",
+      "example": {
+        "stock": 20,
+        "price_in_dollars": 100,
+        "name": "dummy product",
+        "description": "This is a dummy product",
+        "category_id": "1"
+      },
+      "description": "Create a new product in database"
     }
   },
   "basePath": "/"

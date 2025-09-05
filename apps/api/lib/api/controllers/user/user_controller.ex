@@ -5,9 +5,9 @@ defmodule Api.UserController do
   alias Data.Context.Login
   alias Data.Context.CreateUser
   alias Api.Auth.Guardian
-  Data.Context.ViewUsers
+  alias Data.Context.ViewUsers
 
-
+  alias Data.Repo
   use Api, :controller
 #  ---------------------Swagger paths----------------------------
 
@@ -81,6 +81,33 @@ defmodule Api.UserController do
 
   end
 
+  swagger_path :viewroles do
+    get("/api/roles")
+    security [%{Bearer: []}]
+    summary("View all Roles")
+    description("View all Roles")
+    produces "application/json"
+
+    response 200, "Success",Schema.ref(:viewroles)
+    response 404, "Bad request"
+
+
+  end
+  swagger_path :profile do
+    get("/api/profile")
+    security [%{Bearer: []}]
+    summary("View profile
+")
+    description("A user can view profile")
+    produces "application/json"
+
+    response 200, "Success",Schema.ref(:profile)
+    response 404, "Bad request"
+
+
+  end
+
+
 
 
 
@@ -141,9 +168,47 @@ def swagger_definitions do
                }
 
 
+    end,
+
+    profile: swagger_schema do
+
+      title "Profile"
+      description "View a  user profile"
+
+      example %{
+        email: "tester@gmail.com",
+        name: "tester",
+       roles:
+        %{
+         role_id: "1",
+        role_name: "Admin",
+
+        role_id: "3",
+        role_name: "Manager",
+
+          }
+      }
+
+
+    end,
+
+
+    viewroles: swagger_schema do
+      title "Roles"
+      description "View all roles"
+
+      example %{
+
+        id: "1",
+        name: "Admin"
+      }
+
     end
   }
 end
+
+
+
 
 
 #----------------------------------------------------------------------
@@ -190,12 +255,22 @@ end
   end
 
 
-  def viewusers(conn, _params) do
-    case Data.Context.ViewUsers.viewusers() do
+  def viewusers(conn,params) do
+  name=params["name"]
+  email=params["email"]
+  role=params["role"]
+  page=params["page"]
+  pagesize=params["pagesize"]
+  order=params["order"]
 
-      {:ok,users}->
+  page= Data.Context.ViewUsers.viewusers(name,email,order,role,page,pagesize)
+
+if page.total_entries==0 do
+
+  json(conn,%{message: "no record fetched"})
+end
     user_maps =
-      Enum.map(users, fn user ->
+      Enum.map(page.entries, fn user ->
         %{
           id: user.id,
           name: user.name,
@@ -216,10 +291,70 @@ end
     })
 
 
-    {:error,message} -> json(conn,%{message: message})
   end
 
-  end
+
+  def viewroles(conn,_params) do
+    page=Data.Context.ViewRoles.viewroles()
+
+
+    if page.total_entries==0 do
+      json(conn,%{message: "No role found"})
+    end
+
+    roles=page.entries
+
+    json(conn,%{
+    message: "Roles fetched successfully",
+    status: "Success",
+     Roles:
+
+    Enum.map(roles,fn role->
+         %{
+           id: role.id,
+          name: role.name,
+          users: Enum.map(role.users, fn user ->
+          %{
+            name: user.name,
+          email: user.email
+          }end) ,
+
+
+
+
+
+    } end ),
+
+      page_size: page.page_size,
+      page: page.page_number,
+      total_entries: page.total_entries
+
+
+}
+      )
+
+
+end
+
+
+def profile(conn,_params) do
+      user=Guardian.Plug.current_resource(conn)
+     user= Repo.preload(user,:roles)
+
+    json(conn,%{message: "Profile fetched successfuully",
+                       user: %{
+id: user.id,
+name: user.name,
+email: user.email,
+                       roles: Enum.map(user.roles, fn r -> %{
+                      id:  r.id,
+                       name: r.name
+                                                           } end)
+                          }})
+
+                          end
+
+
 
 end
 

@@ -66,6 +66,9 @@ defmodule Api.Router do
     post "/user", Api.UserController, :createuser
     post "/login",Api.UserController, :login
     get "/users", Api.UserController, :viewusers
+    get "/roles", Api.UserController, :viewroles
+    get "/profile",Api.UserController, :profile
+    post "/product",Api.ProductController, :createproduct
   end
 
 
